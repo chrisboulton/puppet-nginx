@@ -1,4 +1,9 @@
-define nginx::config($ensure = 'present', $source = '', $content = '') {
+define nginx::config(
+  $ensure = 'present',
+  $conf_path = "/etc/nginx/conf.d/${name}.conf",
+  $source = '',
+  $content = ''
+) {
  validate_string($source, $content)
   if ($ensure != 'present' and $ensure != 'absent') {
     fail("Nginx::Config[$name] ensure should be one of present/absent")
@@ -10,8 +15,6 @@ define nginx::config($ensure = 'present', $source = '', $content = '') {
   elsif ($content and $source) {
     fail("Nginx::Config[$name] cannot specify both source and content")
   }
-
-  $conf_path   = "/etc/nginx/conf.d/${name}.conf"
 
   File {
     notify => Exec['reload-nginx'],

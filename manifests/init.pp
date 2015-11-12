@@ -18,6 +18,7 @@ class nginx($package = 'full', $version = 'installed', $config = '', $fastcgi_pa
     }
 
     file { [
+        '/etc/nginx/logs.d/',
         '/etc/nginx/conf.d/',
         '/etc/nginx/upstreams.d/',
         '/etc/nginx/sites-enabled',
