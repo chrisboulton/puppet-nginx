@@ -7,6 +7,8 @@ class nginx(
   $service_ensure  = 'running',
   $user            = 'www-data',
   $group           = 'www-data',
+  $access_log_file = '/var/log/nginx/access.log',
+  $error_log_file  = '/var/log/nginx/error.log',
 ) {
 
   package { 'nginx':

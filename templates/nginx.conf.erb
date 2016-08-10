@@ -2,7 +2,7 @@ user <%= @user %> <%= @group %>;
 worker_processes 2;
 worker_rlimit_nofile 4096;
 
-error_log /var/log/nginx/error.log;
+error_log <%= @error_log_file %>;
 pid /var/run/nginx.pid;
 
 events {
@@ -20,7 +20,7 @@ http {
 	log_format vhost_combined '$server_name $remote_addr - $remote_user [$time_local]  '
 	                          '"$request" $status $body_bytes_sent '
 	                          '"$http_referer" "$http_user_agent" $request_time $upstream_response_time';
-	access_log /var/log/nginx/access.log vhost_combined;
+	access_log <%= @access_log_file %> vhost_combined;
 
 	keepalive_timeout 4;
 	tcp_nodelay on;
