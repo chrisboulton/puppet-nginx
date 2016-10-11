@@ -15,18 +15,20 @@ class nginx(
     name   => "nginx-${package}",
   }
 
+  $restart_cmd = '/usr/sbin/nginx -t -c /etc/nginx/nginx.conf && (/etc/init.d/nginx status && /etc/init.d/nginx reload || /etc/init.d/nginx start)'
+
   service { 'nginx':
     ensure     => $service_ensure,
     enable     => true,
     hasrestart => true,
     hasstatus  => true,
-    restart    => '/usr/sbin/nginx -t -c /etc/nginx/nginx.conf && /etc/init.d/nginx reload',
+    restart    => $restart_cmd,
     subscribe  => File['/etc/nginx/nginx.conf'],
   }
 
   if $service_ensure == 'running' {
     exec { 'reload-nginx':
-      command     => '/usr/sbin/nginx -t -c /etc/nginx/nginx.conf && /etc/init.d/nginx reload',
+      command     => $restart_cmd,
       refreshonly => true,
     }
   }
