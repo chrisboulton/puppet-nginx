@@ -3,16 +3,21 @@ class nginx(
   $config          = '',
   $content         = '',
   $package         = 'full',
+  $custom_package  = '',
   $version         = 'installed',
   $fastcgi_params  = '',
   $service_ensure  = 'running',
   $user            = 'www-data',
   $group           = 'www-data',
 ) {
+  $actual_package = $custom_package ? {
+    ''      => "nginx-${package}",
+    default => $custom_package
+  }
 
   package { 'nginx':
     ensure => $version,
-    name   => "nginx-${package}",
+    name   => $actual_package,
   }
 
   service { 'nginx':

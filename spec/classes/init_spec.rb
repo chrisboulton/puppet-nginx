@@ -4,6 +4,45 @@ describe 'nginx' do
   it { is_expected.to compile }
   it { is_expected.to contain_class('nginx') }
 
+  context 'with no custom_package defined' do
+    it "uses the 'nginx-' package prefix" do
+      is_expected.to contain_package('nginx').with(
+        'ensure' => 'installed',
+        'name'   => 'nginx-full',
+      )
+    end
+
+    context 'and a custom package variant' do
+      let(:params) {
+        {
+          :package => 'extras',
+        }
+      }
+
+      it "uses the 'nginx-' package prefix with the expected variant" do
+        is_expected.to contain_package('nginx').with(
+          'ensure' => 'installed',
+          'name'   => 'nginx-extras',
+        )
+      end
+    end
+  end
+
+  context "with custom_package specified" do
+    let(:params) {
+      {
+        :custom_package => 'openresty',
+      }
+    }
+
+    it "uses it as the package name" do
+      is_expected.to contain_package('nginx').with(
+        'ensure' => 'installed',
+        'name'   => 'openresty',
+      )
+    end
+  end
+
   context 'with content and config nginx class should not compile' do
     let(:params) {
       {:config  => 'something',
@@ -41,5 +80,4 @@ describe 'nginx' do
         .with_content(/worker_processes 2/)
     end
   end
-
 end
