@@ -1,13 +1,15 @@
 # - Class to install and manage nginx
 class nginx(
-  $config          = '',
-  $content         = '',
-  $package         = 'full',
-  $version         = 'installed',
-  $fastcgi_params  = '',
-  $service_ensure  = 'running',
-  $user            = 'www-data',
-  $group           = 'www-data',
+  String $config                              = '',
+  String $content                             = '',
+  String $package                             = 'full',
+  String $version                             = 'installed',
+  String $fastcgi_params                      = '',
+  Enum['stopped', 'running'] $service_ensure  = 'running',
+  String $user                                = 'www-data',
+  String $group                               = 'www-data',
+  Integer $worker_connections                 = 1024,
+  Integer $worker_processes                   = 2,
 ) {
 
   package { 'nginx':
