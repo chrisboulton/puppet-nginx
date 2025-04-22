@@ -10,7 +10,7 @@ describe 'nginx::config' do
   context "with source and content both specified" do
     let(:params) {
       {
-        :source  => '/home/foo.conf',
+        :source  => 'puppet:///modules/test/home/foo.conf',
         :content => 'foo',
       }
     }
@@ -19,11 +19,11 @@ describe 'nginx::config' do
   end
 
   context "with source specified" do
-    let(:params) { {:source => '/home/foo.conf'} }
+    let(:params) { {:source => 'puppet:///modules/test/home/foo.conf'} }
 
     it { is_expected.to compile }
     it { is_expected.to contain_nginx__config('foo') }
-    it { is_expected.to contain_file('/etc/nginx/conf.d/foo.conf').with_source('/home/foo.conf') }
+    it { is_expected.to contain_file('/etc/nginx/conf.d/foo.conf').with_source('puppet:///modules/test/home/foo.conf') }
 
     context "and custom path" do
       let(:params) {
@@ -32,7 +32,7 @@ describe 'nginx::config' do
         )
       }
 
-      it { is_expected.to contain_file('/etc/nginx/my_config.conf').with_source('/home/foo.conf') }
+      it { is_expected.to contain_file('/etc/nginx/my_config.conf').with_source('puppet:///modules/test/home/foo.conf') }
     end
   end
 

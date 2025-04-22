@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'puppet', '<4'
-gem 'safe_yaml', '>= 1.0.4'
+gem 'puppet', '<8'
 gem 'librarian-puppet'
 
 group :development, :test do

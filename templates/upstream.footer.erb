@@ -1,10 +1,1 @@
-<% if @check_health != false -%>
-<%= "check interval=#{@check_interval} rise=#{@check_rise} fall=#{@check_fall} " -%>
-<%= "port=#{@check_port} " if @check_port != '' -%>
-<%= "timeout=#{@check_timeout} default_down=#{@check_default_down} type=#{@check_type};" %>
-<%= "check_keepalive_requests #{@check_keepalive_requests};" if @check_keepalive_requests != '' %>
-<%= "check_http_send \"#{@check_http_send}\";" if @check_http_send != '' %>
-<%= "check_http_expect_alive #{@check_http_expect_alive};" if  @check_http_expect_alive != '' %>
-<% end -%>
-
 }

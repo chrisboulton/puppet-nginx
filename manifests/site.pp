@@ -1,13 +1,10 @@
 # Class to manage site resources
 define nginx::site(
-  $ensure  = 'present',
-  $source  = undef,
-  $content = '',
+  Enum['absent', 'present'] $ensure     = 'present',
+  Optional[Stdlib::Filesource] $source  = undef,
+  String $content = '',
 ) {
-  validate_string($source, $content)
-
   include nginx
-
   File {
     ensure  => $ensure ? {
       'absent' => 'absent',
